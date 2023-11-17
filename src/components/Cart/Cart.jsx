@@ -4,6 +4,7 @@ import { Badge, Button, Drawer, InputNumber, Table } from 'antd';
 import { removeProduct } from 'store/cart/cart-reducer';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { addProduct } from '../../store/cart/cart-reducer';
 
 function Cart() {
   const dispatch = useDispatch();
@@ -44,20 +45,15 @@ function Cart() {
             {
               title: 'Quantity',
               dataIndex: 'quantity',
-              render: (value, record) => {
+              render: (quantity, product) => {
+                // console.log(value)
                 return (
                   <InputNumber
-                    min={0}
-                    defaultValue={value}
+                    min={1}
+                    // defaultValue={1}
+                    value={quantity}
                     onChange={(value) => {
-                      setCartItems((pre) =>
-                        pre.map((cart) => {
-                          if (record.id == cart.id) {
-                            cart.total = cart.price * value;
-                          }
-                          return cart;
-                        }),
-                      );
+                      dispatch(addProduct({ ...product, quantity: value }));
                     }}
                   ></InputNumber>
                 );

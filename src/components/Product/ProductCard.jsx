@@ -1,15 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, message } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { addProduct } from 'store/cart/cart-reducer';
 
-export default function ProductCard({ img, pricee, title, category, product, path }) {
+export default function ProductCard(product) {
+  const { id, images, price, title, category } = product;
+  
   const dispatch = useDispatch();
+
+  const cartProducts = useSelector((store) => store.cart.products);
+  const alreadyAdded = cartProducts.some((x) => x.id === id);
 
   const addProductToCard = () => {
     dispatch(addProduct(product));
@@ -20,14 +25,13 @@ export default function ProductCard({ img, pricee, title, category, product, pat
     <div>
       <Card sx={{ maxHeight: '420px', maxWidth: '250px' }}>
         <div style={{ width: '300px', height: '200px', display: 'flex' }}>
-          <Link to={`/products/${path}`}>
-            <img src={img} alt="" style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
+          <Link to={`/products/${id}`}>
+            <img src={images[0]} alt="" style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
           </Link>
         </div>
-        <CardContent >
-        
-          <Typography variant="h6"  color="red">
-          {title}
+        <CardContent>
+          <Typography variant="h6" color="red">
+            {title}
           </Typography>
 
           <Typography variant="body2" color="text.secondary">
@@ -35,8 +39,10 @@ export default function ProductCard({ img, pricee, title, category, product, pat
           </Typography>
         </CardContent>
         <CardActions className="flex justify-between">
-          <div>Цена: {pricee}$ </div>
-          <Button onClick={addProductToCard}>В корзину</Button>
+          <div>Цена: {price}$ </div>
+          <Button disabled={alreadyAdded} onClick={addProductToCard}>
+            В корзину
+          </Button>
         </CardActions>
       </Card>
     </div>

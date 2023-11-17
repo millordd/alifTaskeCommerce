@@ -3,7 +3,6 @@ import debounce from 'lodash/debounce';
 import { useDispatch, useSelector } from 'react-redux';
 import { Select, Spin } from 'antd';
 import Menu from 'antd/es/menu';
-import { Pagination } from 'antd';
 
 import ProductCard from 'components/Product/ProductCard';
 import { useGetProducts } from 'hooks/api/useGetProducts';
@@ -70,17 +69,10 @@ function ProductsIndexPage() {
 
         <div className="pt-[10px] flex flex-wrap mt-[20px] justify-center  gap-[30px]">
           {data?.products && Array.isArray(data?.products) ? (
-            data?.products?.map((el) => (
-              <div key={el.id}>
-                <ProductCard
-                  product={el}
-                  path={el.id}
-                  price={el.price}
-                  img={el.thumbnail}
-                  title={el.title}
-                  pricee={el.price}
-                  category={el.category}
-                />
+            data?.products?.map((product) => (
+              <div key={product.id}>
+                { console.log(product)}
+                <ProductCard {...product} />
               </div>
             ))
           ) : (
