@@ -46,11 +46,9 @@ function Cart() {
               title: 'Quantity',
               dataIndex: 'quantity',
               render: (quantity, product) => {
-                // console.log(value)
                 return (
                   <InputNumber
                     min={1}
-                    // defaultValue={1}
                     value={quantity}
                     onChange={(value) => {
                       dispatch(addProduct({ ...product, quantity: value }));

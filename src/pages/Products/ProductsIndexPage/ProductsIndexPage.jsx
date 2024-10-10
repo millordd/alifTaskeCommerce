@@ -16,7 +16,6 @@ function ProductsIndexPage() {
   const [searchValue, setSearchValue] = useState('');
   const { data, isLoading } = useGetProducts();
   const { data: categories } = useGetCategories();
- console.log({getSelectedCategory,categories});
  
   const searchQuery = debounce((val) => {
     dispatch(setSearch(val));
@@ -24,7 +23,6 @@ function ProductsIndexPage() {
 
   const changeCategory = useCallback(
     (el) => {
-      console.log(el)
       dispatch(setSelectedCategory(el));
     },
     [dispatch],
