@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RemoveCircleOutlineOutlined, ShoppingCartOutlined } from '@mui/icons-material';
-import { Badge, Button, Drawer, InputNumber, Table } from 'antd';
+import { Badge, Drawer, InputNumber, Table } from 'antd';
 import { removeProduct } from 'store/cart/cart-reducer';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,7 +25,7 @@ function Cart() {
       <Drawer
         open={cartDrawerOpen}
         onClose={() => setCartDrawerOpen(false)}
-        contentWrapperStyle={{ width: 500 }}
+        contentWrapperStyle={{ minWidth: 600 }}
         title="Ваш Корзина"
       >
         <Table
