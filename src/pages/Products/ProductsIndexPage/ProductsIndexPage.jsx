@@ -7,7 +7,7 @@ import Menu from 'antd/es/menu';
 import ProductCard from 'components/Product/ProductCard';
 import { useGetProducts } from 'hooks/api/useGetProducts';
 import { useGetCategories } from 'hooks/api/useGetCategories';
-import { setSearch, setSelectedCategory, setPagination } from 'store/products/products-reducer';
+import { setSearch, setSelectedCategory } from 'store/products/products-reducer';
 
 function ProductsIndexPage() {
   const dispatch = useDispatch();
@@ -16,13 +16,15 @@ function ProductsIndexPage() {
   const [searchValue, setSearchValue] = useState('');
   const { data, isLoading } = useGetProducts();
   const { data: categories } = useGetCategories();
-
+ console.log({getSelectedCategory,categories});
+ 
   const searchQuery = debounce((val) => {
     dispatch(setSearch(val));
   }, 1000);
 
   const changeCategory = useCallback(
     (el) => {
+      console.log(el)
       dispatch(setSelectedCategory(el));
     },
     [dispatch],
@@ -49,12 +51,12 @@ function ProductsIndexPage() {
     <div className="max-w-[1450px] mx-auto pt-5 pb-[30px] bg-[#fff]">
       <div className="w-[90%] mx-auto ">
         <p></p>
-        <Select className="w-[300px]" value={getSelectedCategory} defaultValue="All" onChange={changeCategory}>
+        <Select className="w-[300px]" value={getSelectedCategory} onChange={changeCategory}>
           <Menu>All</Menu>
           {categories?.map((e) => {
             return (
               <>
-                <Menu value={e}>{e}</Menu>
+                <Menu key={e.id} value={e.name}>{e.name}</Menu>
               </>
             );
           })}
@@ -71,16 +73,13 @@ function ProductsIndexPage() {
           {data?.products && Array.isArray(data?.products) ? (
             data?.products?.map((product) => (
               <div key={product.id}>
-                { console.log(product)}
                 <ProductCard {...product} />
               </div>
             ))
           ) : (
             <div>No items in the list</div>
           )}
-          {/* <div className="w-full flex justify-center">
-            {data.total && <Pagination defaultCurrent={1} total={data.total} />}
-          </div> */}
+
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addProduct(state, { payload }) {
+      
       const alreadyAdded = state.products.find((x) => x.id === payload.id);
       if (alreadyAdded) {
         const updatedProduct = {
@@ -23,7 +24,6 @@ export const cartSlice = createSlice({
           return x;
         });
 
-        state.products = updatedStore;
         return;
       }
       state.products = [

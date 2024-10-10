@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  selectedCategory: undefined,
+  selectedCategory: "",
   search: '',
   idx: null,
   pagination: undefined,
