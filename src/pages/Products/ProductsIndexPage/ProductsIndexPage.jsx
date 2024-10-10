@@ -16,7 +16,8 @@ function ProductsIndexPage() {
   const [searchValue, setSearchValue] = useState('');
   const { data, isLoading } = useGetProducts();
   const { data: categories } = useGetCategories();
- 
+  console.log(data);
+  
   const searchQuery = debounce((val) => {
     dispatch(setSearch(val));
   }, 1000);
@@ -67,9 +68,9 @@ function ProductsIndexPage() {
           value={searchValue}
         />
 
-        <div className="pt-[10px] flex flex-wrap mt-[20px] justify-center  gap-[30px]">
-          {data?.products && Array.isArray(data?.products) ? (
-            data?.products?.map((product) => (
+        <div className="pt-[10px] flex flex-wrap mt-[20px] justify-center gap-[30px]">
+          {data?.products && Array.isArray(data?.products) && data.products.length > 0 ? (
+            data.products.map((product) => (
               <div key={product.id}>
                 <ProductCard {...product} />
               </div>
@@ -77,8 +78,8 @@ function ProductsIndexPage() {
           ) : (
             <div>No items in the list</div>
           )}
-
         </div>
+
       </div>
     </div>
   );

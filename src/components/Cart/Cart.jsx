@@ -12,9 +12,10 @@ function Cart() {
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
 
   const [cartItems, setCartItems] = useState([]);
+  
 
   useEffect(() => {
-    setCartItems(cartProducts.map((product) => ({ total: 0, ...product })));
+    setCartItems(cartProducts.map((product) => ({ ...product })));
   }, [cartProducts]);
 
   return (
